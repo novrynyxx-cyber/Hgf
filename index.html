@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Даниил Четырко — Бравлопедия</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --page: #ffffff; --text: #202122; --muted: #54595d;
+    --link: #3366cc; --border: #a2a9b1; --box: #f8f9fa; --head: #eaecf0;
+    --note: #fef6e7; --note-border: #fc3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101418; --page: #181c22; --text: #eaecf0; --muted: #a2a9b1;
+      --link: #88a3e8; --border: #54595d; --box: #202530; --head: #27292d;
+      --note: #2b2410; --note-border: #a68300; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #101418; --page: #181c22; --text: #eaecf0; --muted: #a2a9b1;
+    --link: #88a3e8; --border: #54595d; --box: #202530; --head: #27292d;
+    --note: #2b2410; --note-border: #a68300; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.top { display: flex; align-items: center; gap: 12px; padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    border-bottom: 1px solid var(--border); background: var(--page); }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: "Linux Libertine", Georgia, serif; }
+  .logo .globe { width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffd84d, #f0a500 60%, #b36b00);
+    display: grid; place-items: center; font-weight: 900; color: #fff; font-size: 20px;
+    text-shadow: 0 1px 2px #0006; }
+  .logo b { font-size: 20px; font-weight: normal; letter-spacing: .5px; }
+  .logo small { display: block; font-size: 11px; color: var(--muted); font-family: sans-serif; }
+  .search { margin-left: auto; flex: 0 1 320px; }
+  .search input { width: 100%; padding: 6px 10px; border: 1px solid var(--border);
+    border-radius: 2px; background: var(--page); color: var(--text); }
+  main { max-width: 1100px; margin: 0 auto; background: var(--page);
+    padding: 16px 24px 40px; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .tabs { display: flex; gap: 16px; font-size: 14px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .tabs span { padding: 4px 0; } .tabs .on { border-bottom: 2px solid var(--text); font-weight: 600; }
+  h1 { font-family: "Linux Libertine", Georgia, "Times New Roman", serif; font-weight: normal;
+    font-size: 2rem; margin: 0 0 4px; border-bottom: 1px solid var(--border); }
+  h2 { font-family: "Linux Libertine", Georgia, "Times New Roman", serif; font-weight: normal;
+    font-size: 1.5rem; border-bottom: 1px solid var(--border); margin: 28px 0 8px; }
+  h3 { font-size: 1.05rem; margin: 18px 0 4px; }
+  .from { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .note { background: var(--note); border: 1px solid var(--note-border); border-left-width: 6px;
+    padding: 8px 12px; font-size: 14px; margin: 10px 0 16px; }
+  .infobox { float: right; width: 300px; margin: 0 0 16px 20px; border: 1px solid var(--border);
+    background: var(--box); font-size: 13.5px; padding: 6px; }
+  .infobox .title { text-align: center; font-weight: bold; font-size: 1.2rem; padding: 4px; background: #ffcf40; color: #202122; }
+  .infobox img { width: 100%; display: block; margin: 6px 0 2px; }
+  .infobox .cap { text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .infobox table { width: 100%; border-collapse: collapse; }
+  .infobox th { text-align: left; vertical-align: top; padding: 3px 6px 3px 0; width: 42%; }
+  .infobox td { padding: 3px 0; }
+  .infobox .sec { text-align: center; background: var(--head); font-weight: bold; padding: 3px; }
+  .toc { display: inline-block; border: 1px solid var(--border); background: var(--box);
+    padding: 8px 16px; font-size: 14px; margin: 8px 0; }
+  .toc b { display: block; text-align: center; }
+  .toc ol { margin: 6px 0 0; padding-left: 20px; }
+  table.wiki { border-collapse: collapse; margin: 8px 0; font-size: 14px; background: var(--box); max-width: 100%; }
+  table.wiki th, table.wiki td { border: 1px solid var(--border); padding: 5px 10px; }
+  table.wiki th { background: var(--head); }
+  .gallery { display: flex; flex-wrap: wrap; gap: 12px; }
+  .gallery figure { margin: 0; width: 200px; border: 1px solid var(--border); background: var(--box); padding: 4px; }
+  .gallery img { width: 100%; height: 240px; object-fit: cover; display: block; }
+  .gallery figcaption { font-size: 12.5px; padding: 4px 2px; }
+  blockquote { margin: 12px 0; padding: 8px 16px; border-left: 4px solid var(--border); font-style: italic; }
+  sup a { font-size: 11px; }
+  .refs { font-size: 13.5px; }
+  footer { max-width: 1100px; margin: 0 auto; padding-block: 14px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font-size: 12px; color: var(--muted); }
+  .cn { font-size: 11px; vertical-align: super; color: var(--link); }
+  @media (max-width: 720px) {
+    main { padding-block: 12px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border: 0; }
+    .infobox { float: none; width: 100%; margin: 0 0 16px; }
+    .search { display: none; }
+    .gallery figure { width: calc(50% - 6px); }
+    .gallery img { height: 180px; }
+    table.wiki { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo">
+    <div class="globe">Б</div>
+    <div><b>БРАВЛОПЕДИЯ</b><small>Свободная энциклопедия про бравлеров</small></div>
+  </div>
+  <div class="search"><input type="search" placeholder="Искать в Бравлопедии" aria-label="Поиск"></div>
+</header>
+
+<main>
+  <nav class="tabs"><span class="on">Статья</span><span>Обсуждение</span><span>Читать</span><span>Править</span><span>История</span></nav>
+
+  <h1>Четырко, Даниил</h1>
+  <div class="from">Материал из Бравлопедии — свободной энциклопедии</div>
+
+  <div class="note">⭐ Эта статья входит в число <b>избранных статей</b>. Попытки её отредактировать приводят к немедленному поражению в режиме «Захват кристаллов».</div>
+
+  <aside class="infobox">
+    <div class="title">Даниил Четырко</div>
+    <img src="img/portrait.jpg" alt="Даниил Четырко в серой толстовке">
+    <div class="cap">Даниил за 3 секунды до того, как затащить катку</div>
+    <table>
+      <tr><th>Полное имя</th><td>Даниил Четырко</td></tr>
+      <tr><th>Прозвища</th><td>«Четыре Кубка», «Мама Птица», «Калькулятор»</td></tr>
+      <tr><th>Род деятельности</th><td>Профессиональный игрок в Brawl Stars, легенда</td></tr>
+      <tr><td colspan="2" class="sec">Игровая карьера</td></tr>
+      <tr><th>Кубков</th><td>∞ (сервер не смог посчитать)</td></tr>
+      <tr><th>Любимый бравлер</th><td>Все. Они сами выбирают его</td></tr>
+      <tr><th>Ранг</th><td>Мастер, выше которого только он сам</td></tr>
+      <tr><th>Поражения</th><td>0<span class="cn">[источник не указан 4 года]</span></td></tr>
+      <tr><th>Пинг</th><td>−12 мс</td></tr>
+      <tr><td colspan="2" class="sec">Награды</td></tr>
+      <tr><td colspan="2">🏆 Золотой Шелли (×7)<br>🏆 Почётный бравлер планеты Земля<br>🏆 Орден «За спасение тиммейтов»</td></tr>
+    </table>
+  </aside>
+
+  <p><b>Дании́л Четы́рко</b> — величайший игрок в истории <a href="#">Brawl Stars</a>, обладатель всех существующих кубков и нескольких несуществующих. По оценкам экспертов, является единственным человеком, способным пройти «Столкновение» с закрытыми глазами, держа телефон вверх ногами. Создатели игры, по слухам, балансируют новых бравлеров, спрашивая у Даниила, «не слишком ли это просто для него».</p>
+  <p>Широко известен своей невозмутимостью: на портрете в карточке он изображён за 3 секунды до победы над командой из трёх игроков с рангом «Легенда» в одиночку.</p>
+
+  <div class="toc">
+    <b>Содержание</b>
+    <ol>
+      <li><a href="#early">Ранние годы</a></li>
+      <li><a href="#career">Карьера</a></li>
+      <li><a href="#style">Стиль игры</a></li>
+      <li><a href="#records">Рекорды</a></li>
+      <li><a href="#bird">Феномен «Мама Птица»</a></li>
+      <li><a href="#culture">В культуре</a></li>
+      <li><a href="#gallery">Галерея</a></li>
+      <li><a href="#refs">Примечания</a></li>
+    </ol>
+  </div>
+
+  <h2 id="early">Ранние годы</h2>
+  <p>По легенде, Даниил впервые взял телефон в руки в возрасте 11 месяцев и сразу же поднял Эль Примо до 500 кубков. Первым его словом было не «мама», а «гипер&shy;заряд»<sup><a href="#r1">[1]</a></sup>.</p>
+  <p>В школе Даниил проявлял выдающиеся способности к математике: с помощью обычного калькулятора он рассчитал оптимальную траекторию снаряда Брока с учётом ветра, вращения Земли и настроения противника. Результат вычислений не поместился на экран (см. <a href="#gallery">фото</a>).</p>
+
+  <h2 id="career">Карьера</h2>
+  <h3>Восхождение</h3>
+  <p>За первую неделю игры Даниил прошёл путь от 0 до 30 000 кубков, после чего игра вежливо попросила его «дать шанс другим». Даниил отказался.</p>
+  <h3>Чемпионат мира</h3>
+  <p>На Чемпионате мира по Brawl Stars Даниил выступал в составе команды из одного человека, потому что тиммейты, по его словам, «только мешали бы». Финальный матч длился 4 секунды. Комментаторы не успели произнести его фамилию полностью.</p>
+  <h3>Тренерская деятельность</h3>
+  <p>В настоящее время Даниил обучает молодых бравлеров (см. раздел <a href="#bird">«Мама Птица»</a>) и консультирует разработчиков по вопросам баланса.</p>
+
+  <h2 id="style">Стиль игры</h2>
+  <p>Аналитики выделяют следующие особенности игры Даниила:</p>
+  <ul>
+    <li><b>«Взгляд снизу»</b> — фирменная техника, при которой Даниил смотрит на соперника снизу вверх с таким спокойствием, что тот сам выходит из матча (см. селфи в галерее).</li>
+    <li><b>Чёлка-радар</b> — по непроверенным данным, причёска Даниила улавливает перемещения врагов в кустах.</li>
+    <li><b>Нулевой тильт</b> — за всю карьеру Даниил ни разу не бросил телефон. Телефон бросали только его противники.</li>
+    <li><b>Расчёт</b> — перед каждым выстрелом Даниил проводит вычисления в уме, а для особо сложных случаев носит с собой калькулятор.</li>
+  </ul>
+  <blockquote>«Я не выигрываю матчи. Матчи сами проигрываются, когда видят меня в лобби».<br>— Даниил Четырко, интервью журналу «Бравл Ньюс»</blockquote>
+
+  <h2 id="records">Рекорды</h2>
+  <table class="wiki">
+    <tr><th>Рекорд</th><th>Значение</th><th>Статус</th></tr>
+    <tr><td>Больше всего кубков</td><td>∞ + 1</td><td>Не побит</td></tr>
+    <tr><td>Самый быстрый «Захват кристаллов»</td><td>0,8 сек</td><td>Не побит</td></tr>
+    <tr><td>Самое долгое выживание в «Столкновении»</td><td>Игра закончилась раньше, чем он</td><td>Не побит</td></tr>
+    <tr><td>Количество Звёздных дропов за день</td><td>Сервер Supercell перезагрузился</td><td>Под расследованием</td></tr>
+    <tr><td>Победы с бравлером 1-го уровня</td><td>Все</td><td>Не побит</td></tr>
+  </table>
+
+  <h2 id="bird">Феномен «Мама Птица»</h2>
+  <p>Благодаря своей заботе о новичках Даниил получил в сообществе почётное прозвище <b>«Мама Птица»</b>. Он лично выкормил и вырастил целый клан молодых игроков, которые теперь уверенно стоят на своих лапках в ранговых боях. Каждый вечер Даниил прилетает к ним в гнездо и рассказывает, как правильно контрить Мортиса<sup><a href="#r2">[2]</a></sup>.</p>
+  <p>Изображение, ставшее мемом (см. <a href="#gallery">галерею</a>), было признано «самой трогательной картинкой в истории бравл-сообщества».</p>
+
+  <h2 id="culture">В культуре</h2>
+  <ul>
+    <li>В честь Даниила планировали назвать нового бравлера, но разработчики решили, что он будет слишком сильным.</li>
+    <li>Фраза «Сыграл как Четырко» в сообществе означает «сыграл идеально».</li>
+    <li>Слово «четырко» в некоторых кланах используется как единица измерения скилла. 1 четырко = 1000 обычных игроков.</li>
+  </ul>
+
+  <h2 id="gallery">Галерея</h2>
+  <div class="gallery">
+    <figure><img src="img/portrait.jpg" alt="Даниил в серой толстовке"><figcaption>Официальный портрет для зала славы</figcaption></figure>
+    <figure><img src="img/selfie.jpg" alt="Селфи Даниила снизу"><figcaption>Знаменитый «Взгляд снизу». Противник вышел из матча</figcaption></figure>
+    <figure><img src="img/calculator.jpg" alt="Даниил с калькулятором"><figcaption>Расчёт траектории суперудара Брока. Ответ не влез на экран</figcaption></figure>
+    <figure><img src="img/bird.jpg" alt="Мама Птица"><figcaption>«Мама Птица» с молодыми бравлерами клана</figcaption></figure>
+  </div>
+
+  <h2 id="refs">Примечания</h2>
+  <ol class="refs">
+    <li id="r1">Мама Даниила. Личная беседа. — 2010.</li>
+    <li id="r2">Мортис. «Я больше не выхожу в лобби, если там Даниил» // Бравл Ньюс. — 2026. — № 4.</li>
+    <li>Сам Даниил, который говорит, что всё это правда.</li>
+  </ol>
+
+  <p style="font-size:13px;color:var(--muted);margin-top:24px">Категории: <a href="#">Легенды Brawl Stars</a> | <a href="#">Люди, которые никогда не проигрывали</a> | <a href="#">Птицы</a></p>
+</main>
+
+<footer>Эта страница — дружеская шутка и не является настоящей энциклопедией. Все «факты» выдуманы с любовью.</footer>
+</body>
+</html>
