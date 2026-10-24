@@ -501,6 +501,55 @@ def pack(archive_root: Path):
         log("Файл лежит в папке «Загрузки» (Download) телефона.")
 
 
+# ---------------------------------------------------------------- вход
+
+async def login(client):
+    from telethon import errors
+    await client.connect()
+    if await client.is_user_authorized():
+        return
+    while True:
+        phone = "".join(ch for ch in input("ВАШ номер телефона (пример +48123456789): ") if ch.isdigit())
+        if len(phone) >= 8:
+            phone = "+" + phone
+            break
+        log("Номер слишком короткий, попробуйте ещё раз.")
+    try:
+        sent = await client.send_code_request(phone)
+    except errors.FloodWaitError as e:
+        raise SystemExit(f"Telegram временно запретил запрашивать коды: подождите {e.seconds // 60 + 1} мин.")
+    except errors.PhoneNumberInvalidError:
+        raise SystemExit("Telegram не принял номер. Проверьте код страны и цифры.")
+    log("\nКод отправлен. Он приходит НЕ по SMS, а в приложение Telegram — в чат «Telegram» "
+        "с синей галочкой.\nВводите только САМЫЙ ПОСЛЕДНИЙ код: старые коды недействительны.")
+    attempts = 0
+    while True:
+        code = "".join(ch for ch in input("Код из чата «Telegram» (обычно 5 цифр): ") if ch.isdigit())
+        if len(code) < 5:
+            log("Это не код. Ничего не отправил в Telegram, введите ещё раз.")
+            continue
+        try:
+            await client.sign_in(phone, code, phone_code_hash=sent.phone_code_hash)
+            break
+        except errors.SessionPasswordNeededError:
+            while True:
+                pw = getpass.getpass("Облачный пароль Telegram (символы не видны — это нормально), Enter: ")
+                try:
+                    await client.sign_in(password=pw)
+                    break
+                except errors.PasswordHashInvalidError:
+                    log("Неверный облачный пароль, попробуйте ещё раз.")
+            break
+        except errors.PhoneCodeInvalidError:
+            attempts += 1
+            if attempts >= 3:
+                raise SystemExit("Код трижды не подошёл. Подождите 10–15 минут и запустите программу снова.")
+            log("Код не подошёл. Проверьте, что это самое последнее сообщение в чате «Telegram».")
+        except errors.PhoneCodeExpiredError:
+            raise SystemExit("Срок действия кода истёк. Запустите программу снова — придёт новый код.")
+    log("Вход выполнен успешно.")
+
+
 # ---------------------------------------------------------------- main
 
 async def run(args):
@@ -512,11 +561,7 @@ async def run(args):
                             app_version="1.0", connection_retries=10, retry_delay=3,
                             request_retries=8, flood_sleep_threshold=120)
     log("Подключаюсь к Telegram...")
-    await client.start(
-        phone=lambda: input("Номер телефона в формате +79991234567: ").strip(),
-        code_callback=lambda: input("Код из Telegram (придёт в приложение): ").strip(),
-        password=lambda: getpass.getpass("Облачный пароль Telegram (символы не видны — это нормально), Enter: "),
-    )
+    await login(client)
     for p in SECRETS_DIR.glob("session*"):
         os.chmod(p, 0o600)
     try:
