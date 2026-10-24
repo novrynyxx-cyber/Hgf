@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ===== Личные данные: НИКОГДА не попадают в репозиторий =====
+telegram_archive/
+*.session
+*.session-journal
+.tg_export/
+config.json
+*.zip
+site/media/
