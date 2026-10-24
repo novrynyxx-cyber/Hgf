@@ -66,7 +66,13 @@ def load_or_ask_config():
         if api_id.isdigit():
             break
         log("api_id должен состоять только из цифр.")
-    api_hash = getpass.getpass("api_hash (ввод скрыт): ").strip()
+    log("\nСейчас вставьте api_hash и нажмите Enter.")
+    log("ВНИМАНИЕ: символы НЕ отображаются на экране — так и задумано, программа не зависла.")
+    while True:
+        api_hash = getpass.getpass("api_hash: ").strip()
+        if len(api_hash) == 32 and all(c in "0123456789abcdef" for c in api_hash.lower()):
+            break
+        log("Это не похоже на api_hash (должно быть 32 символа 0-9 и a-f). Попробуйте ещё раз.")
     CONFIG_FILE.write_text(json.dumps({"api_id": int(api_id), "api_hash": api_hash}))
     os.chmod(CONFIG_FILE, 0o600)
     return int(api_id), api_hash
@@ -509,7 +515,7 @@ async def run(args):
     await client.start(
         phone=lambda: input("Номер телефона в формате +79991234567: ").strip(),
         code_callback=lambda: input("Код из Telegram (придёт в приложение): ").strip(),
-        password=lambda: getpass.getpass("Пароль двухэтапной проверки (если есть, ввод скрыт): "),
+        password=lambda: getpass.getpass("Облачный пароль Telegram (символы не видны — это нормально), Enter: "),
     )
     for p in SECRETS_DIR.glob("session*"):
         os.chmod(p, 0o600)
