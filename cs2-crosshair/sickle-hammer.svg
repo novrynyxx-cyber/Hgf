@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Серп и молот для оверлея-прицела. Точка (50,50) — точный центр изображения;
+       там прозрачное «окошко», через которое видна точка встроенного прицела CS2. -->
+  <defs>
+    <mask id="hole">
+      <rect width="100" height="100" fill="#fff"/>
+      <circle cx="50" cy="50" r="5" fill="#000"/>
+    </mask>
+  </defs>
+  <g mask="url(#hole)" fill="#E8000B" stroke="#000" stroke-width="2.4" stroke-linejoin="round">
+    <!-- серп: лезвие и рукоять -->
+    <path d="M47 9 A39 39 0 1 1 22 78 L26.5 73.5 A31.5 31.5 0 1 0 47 9 Z"/>
+    <path d="M22 78 L26.5 73.5 L31 78 L16 93 Q10.5 93.5 8.5 89.5 Z"/>
+    <!-- молот: рисуется вертикально и поворачивается на 45° вокруг центра -->
+    <g transform="rotate(-45 50 50)">
+      <path d="M46.6 26 H53.4 V94 Q50 97.5 46.6 94 Z"/>
+      <path d="M34 13 H59 L67 17.5 V22.5 L59 27 H34 Z"/>
+    </g>
+  </g>
+  <circle cx="50" cy="50" r="5" fill="none" stroke="#000" stroke-width="2.4"/>
+</svg>
