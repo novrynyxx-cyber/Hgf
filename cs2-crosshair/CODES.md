@@ -26,6 +26,31 @@
 Совет: перед импортом сохраните свой текущий код (кнопка «Поделиться»/Share в том же меню),
 чтобы потом вернуть его.
 
+## «Чё смотришь?» — прицел-лицо ▮_▮
+
+![Лицо](face-preview.png)
+
+Два высоких чёрных «глаза» и плоский «рот» с жёлтой обводкой — недовольная рожица, которая
+смотрит на наблюдающего. Целиться нужно в пустое место между глазами («переносицу»).
+
+```
+CS3wdFbGWecwBNi8OKHj8rJiGAfJT4a6MDcVMr89Zxmyhi
+```
+
+Как это собрано: стиль «Статичный крест» (4), включён T-стиль — верхняя палочка убрана.
+Толщина линий (32 px) больше длины (10 px), поэтому боковые палочки становятся вертикальными
+прямоугольниками-глазами, а нижняя — горизонтальным ртом. Зазор 22 px разносит их от центра.
+
+Экспериментальная версия на динамическом кресте (стиль 0): при беге и стрельбе зазор растёт,
+и лицо «разъезжается» в стороны. В игре не проверено:
+
+```
+CSDTYHjXcpa7iZAU2PV2wGyOQX4HF4F4k7ddCpSbkS6Y9h
+```
+
+Консоль (если код не принимается):
+`cl_crosshairstyle 4; cl_crosshair_t 1; cl_crosshair_length 10; cl_crosshair_thickness 32; cl_crosshair_gap 22; cl_crosshairdot 0; cl_crosshaircolor_r 20; cl_crosshaircolor_g 20; cl_crosshaircolor_b 20; cl_crosshaircolor_a 255; cl_crosshair_drawoutline 1; cl_crosshairoutline_r 255; cl_crosshairoutline_g 230; cl_crosshairoutline_b 0; cl_crosshairoutline_a 255; cl_crosshair_screen_height 1080`
+
 ## То же самое через консоль
 
 Если код не принимается, вставьте строку в консоль (`~`):
